@@ -73,7 +73,9 @@ export default function Home() {
     <main className="min-h-[calc(100vh_-_72px)] lg:min-h-[calc(100vh_-_122px)]">
       <div className="sm:py-10 lg:py-28 sm:max-w-lg lg:max-w-6xl sm:mx-auto lg:px-10 lg:grid lg:grid-cols-2">
         <Carousel
-          opts={{ watchDrag: false }}
+          opts={{
+            loop: true,
+          }}
           className="lg:px-10"
           setApi={setApi}
         >
