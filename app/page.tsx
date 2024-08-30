@@ -53,6 +53,7 @@ export default function Home() {
           className={`rounded-lg bg-white ${
             index === current ? "ring-4 ring-primary" : ""
           }`}
+          key={_}
         >
           <Image
             src={`/assets/image-product-${index + 1}-thumbnail.jpg`}
