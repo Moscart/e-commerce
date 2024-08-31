@@ -1,5 +1,4 @@
 import Cart from "@/components/cart";
-import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
@@ -7,7 +6,7 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, ShoppingCart, Trash } from "lucide-react";
+import { Menu, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
