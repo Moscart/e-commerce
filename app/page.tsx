@@ -17,6 +17,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [totalCart, setTotalCart] = useState(0);
   const [api, setApi] = useState<CarouselApi>();
   const [dialogApi, setDialogApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -70,6 +71,16 @@ export default function Home() {
       ))}
     </div>
   );
+
+  const handleAddToCart = (totalCart: number) => {
+    const local = window.localStorage.getItem("totalItems");
+    const totalStorage = local ? parseInt(local) : 0;
+    window.localStorage.setItem(
+      "totalItems",
+      (totalStorage + totalCart).toString()
+    );
+    setTotalCart(0);
+  };
   return (
     <main className="min-h-[calc(100vh_-_72px)] lg:min-h-[calc(100vh_-_122px)]">
       <div className="sm:py-10 lg:py-28 sm:max-w-lg lg:max-w-6xl sm:mx-auto lg:px-10 lg:grid lg:grid-cols-2">
@@ -92,6 +103,7 @@ export default function Home() {
                       src={`/assets/image-product-${index + 1}.jpg`}
                       width={1000}
                       height={1000}
+                      priority
                       onDragStart={(e) => e.preventDefault()}
                       className="aspect-[4/3] lg:aspect-square object-cover object-top w-full sm:rounded-lg"
                     />
@@ -165,6 +177,9 @@ export default function Home() {
               <Button
                 className="col-span-1 px-0 bg-transparent rounded-r-none group hover:bg-transparent"
                 size={"lg"}
+                onClick={() =>
+                  totalCart > 0 && setTotalCart((prev) => prev - 1)
+                }
               >
                 <Minus
                   className="h-4 w-4 text-primary group-hover:text-primary/50 transition-all"
@@ -175,11 +190,13 @@ export default function Home() {
                 type="number"
                 className="col-span-3 sm:col-span-1 bg-transparent text-center font-bold flex-grow focus:outline-none"
                 min={0}
-                defaultValue={0}
+                value={totalCart}
+                readOnly
               />
               <Button
                 className="col-span-1 px-0 bg-transparent rounded-l-none group hover:bg-transparent"
                 size={"lg"}
+                onClick={() => setTotalCart((prev) => prev + 1)}
               >
                 <Plus
                   className="h-4 w-4 text-primary group-hover:text-primary/50 transition-all"
@@ -190,6 +207,7 @@ export default function Home() {
             <Button
               className="w-full font-bold text-black shadow-primary/50 shadow-lg"
               size={"lg"}
+              onClick={() => handleAddToCart(totalCart)}
             >
               <ShoppingCart className="w-4 h-4 me-3" strokeWidth={3} />
               Add to cart

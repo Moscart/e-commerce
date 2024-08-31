@@ -1,3 +1,4 @@
+import Cart from "@/components/cart";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -114,63 +115,7 @@ export default function Template({
             <PopoverContent className="">
               <div className="p-5 font-bold">Cart</div>
               <Separator />
-              <div className="min-h-[154px] flex flex-col">
-                <div className="text-gray-500 font-bold h-full flex-1 hidden justify-center items-center">
-                  Your cart is empty
-                </div>
-                <div className="text-gray-500 p-5">
-                  <div className="grid gap-4">
-                    <div className="flex gap-4 items-center">
-                      <div className="flex-shrink-0">
-                        <Image
-                          src={"/assets/image-product-1-thumbnail.jpg"}
-                          alt="Fall Limited Edition Sneakers"
-                          width={50}
-                          height={50}
-                          className="rounded"
-                        />
-                      </div>
-                      <div className="flex-grow">
-                        <div className="">Fall Limited Edition Sneakers</div>
-                        <div className="">
-                          $125.00 x 3{" "}
-                          <span className="font-bold text-black">$375.00</span>
-                        </div>
-                      </div>
-                      <div className="">
-                        <Trash className="w-4 h-4" strokeWidth={2} />
-                      </div>
-                    </div>
-                    <div className="flex gap-4 items-center">
-                      <div className="flex-shrink-0">
-                        <Image
-                          src={"/assets/image-product-1-thumbnail.jpg"}
-                          alt="Fall Limited Edition Sneakers"
-                          width={50}
-                          height={50}
-                          className="rounded"
-                        />
-                      </div>
-                      <div className="flex-grow">
-                        <div className="">Fall Limited Edition Sneakers</div>
-                        <div className="">
-                          $125.00 x 3{" "}
-                          <span className="font-bold text-black">$375.00</span>
-                        </div>
-                      </div>
-                      <div className="">
-                        <Trash className="w-4 h-4" strokeWidth={2} />
-                      </div>
-                    </div>
-                  </div>
-                  <Button
-                    className="mt-5 w-full text-black font-bold"
-                    size={"lg"}
-                  >
-                    Checkout
-                  </Button>
-                </div>
-              </div>
+              <Cart />
             </PopoverContent>
           </Popover>
           <Image
