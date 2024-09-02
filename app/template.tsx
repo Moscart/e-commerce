@@ -1,4 +1,7 @@
-import Cart from "@/components/cart";
+"use client";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
@@ -6,13 +9,19 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, ShoppingCart } from "lucide-react";
+import { useCartStore } from "@/store/cart-store";
+import { Menu, ShoppingCart, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Template({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const total = useCartStore((state) => state.total);
+  const resetCartState = useCartStore((state) => state.resetCartState);
+  const handleRemoveCart = () => {
+    resetCartState();
+  };
   return (
     <>
       <header className="p-6 lg:p-0 lg:px-10 flex justify-between items-center lg:max-w-6xl lg:mx-auto lg:border-b">
@@ -105,16 +114,65 @@ export default function Template({
         </div>
         <div className="grid grid-cols-2 gap-5 lg:gap-10">
           <Popover>
-            <PopoverTrigger className="flex justify-center items-center">
+            <PopoverTrigger className="flex justify-center items-center relative">
               <ShoppingCart
                 className="w-5 h-5 lg:w-6 lg:h-6 hover:text-gray-800 text-gray-500"
                 strokeWidth={2}
               />
+              {total > 0 && (
+                <Badge className="absolute top-0 right-0 translate-x-1/3 lg:translate-x-1/4 -translate-y-1/4 lg:-translate-y-0 py-0 px-1.5 text-[8px]">
+                  {total}
+                </Badge>
+              )}
             </PopoverTrigger>
             <PopoverContent className="">
               <div className="p-5 font-bold">Cart</div>
               <Separator />
-              <Cart />
+              <div className="min-h-[154px] flex flex-col">
+                {total == 0 ? (
+                  <div className="text-gray-500 font-bold h-full flex-1 flex justify-center items-center">
+                    Your cart is empty
+                  </div>
+                ) : (
+                  <div className="text-gray-500 p-5">
+                    <div className="grid gap-4">
+                      <div className="flex gap-4 items-center">
+                        <div className="flex-shrink-0">
+                          <Image
+                            src={"/assets/image-product-1-thumbnail.jpg"}
+                            alt="Fall Limited Edition Sneakers"
+                            width={50}
+                            height={50}
+                            className="rounded"
+                          />
+                        </div>
+                        <div className="flex-grow">
+                          <div className="">Fall Limited Edition Sneakers</div>
+                          <div className="flex justify-between">
+                            <div className="">$125.00 x {total}</div>
+                            <div className="font-bold text-black">
+                              ${total * 125}.00
+                            </div>
+                          </div>
+                        </div>
+                        <Button
+                          className="text-gray-500 hover:text-destructive bg-white hover:bg-white"
+                          size={"icon"}
+                          onClick={() => handleRemoveCart()}
+                        >
+                          <Trash className="w-4 h-4" strokeWidth={2} />
+                        </Button>
+                      </div>
+                    </div>
+                    <Button
+                      className="mt-5 w-full text-black font-bold"
+                      size={"lg"}
+                    >
+                      Checkout
+                    </Button>
+                  </div>
+                )}
+              </div>
             </PopoverContent>
           </Popover>
           <Image

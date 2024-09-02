@@ -12,12 +12,16 @@ import {
 } from "@/components/ui/carousel";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { useCartStore } from "@/store/cart-store";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [totalCart, setTotalCart] = useState(0);
+  const updateCart = useCartStore((state) => state.updateCart);
+  const total = useCartStore((state) => state.total);
+
   const [api, setApi] = useState<CarouselApi>();
   const [dialogApi, setDialogApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -73,12 +77,7 @@ export default function Home() {
   );
 
   const handleAddToCart = (totalCart: number) => {
-    const local = window.localStorage.getItem("totalItems");
-    const totalStorage = local ? parseInt(local) : 0;
-    window.localStorage.setItem(
-      "totalItems",
-      (totalStorage + totalCart).toString()
-    );
+    updateCart(totalCart);
     setTotalCart(0);
   };
   return (
